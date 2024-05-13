@@ -121,3 +121,9 @@ app.post('/addproduct', async (req,res) => {
         product: req.body.name
     })
 });
+
+//Creating API for getting allProducts
+app.get('/allproducts', async (req,res) => {
+    let products = await Product.find({});
+    res.send(products);
+});

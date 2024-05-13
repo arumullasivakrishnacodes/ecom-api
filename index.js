@@ -22,25 +22,37 @@ app.get('/', (req,res) => {
     res.send('Expree App is Running');
 });
 
-// Image Storage Engine
-const storage = multer.memoryStorage({
-    destination: './Upload/Images',
-    filename: (req, file, cb) => {
-        return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`);
-    }
-});
+// Set up multer for file uploads
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         cb(null, './uploads');
+//     },
+//     filename: function (req, file, cb) {
+//         cb(null, file.originalname);
+//     }
+// });
 
-const upload = multer({ storage: storage });
+// const upload = multer({ storage: storage });
 
-app.use('/images',express.static('Upload/Images'));
+// // Route to handle file upload
+// app.post('/upload', upload.single('image'), (req, res) => {
+//     const newProduct = new Product({
+//         name: req.body.name,
+//         price: req.body.price,
+//         image: {
+//             data: fs.readFileSync(req.file.path),
+//             contentType: req.file.mimetype
+//         }
+//     });
 
-// Creating Upload Endpoint for Images
-app.post('/upload', upload.single('product'), (req, res) => {
-    res.json({
-        success: 1,
-        image_url: `https://ecom-api-tau.vercel.app/images/${req.file.filename}`
-    });
-});
+//     newProduct.save((err, product) => {
+//         if (err) {
+//             res.status(500).send(err);
+//         } else {
+//             res.status(200).send('Product uploaded successfully');
+//         }
+//     });
+// });
 
 app.listen(port,(error) => {
     if (!error) {

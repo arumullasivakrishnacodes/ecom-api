@@ -165,7 +165,7 @@ app.post('/register', async (req,res) => {
         });
     
         await user.save();
-    
+        res.send('User POST Method')
         res.json({
             success: true,
             email: req.body.email

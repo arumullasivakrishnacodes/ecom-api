@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const multer = require('multer');
 const path = require('path');
 const cors = require('cors');
+const { type } = require('os');
 
 app.use(express.json());
 
@@ -139,3 +140,42 @@ app.get('/allproducts', async (req,res) => {
     let products = await Product.find({});
     res.send(products);
 });
+
+const User = mongoose.model('User', {
+    name: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
+    }
+})
+
+app.post('/register', async (req,res) => {
+    try {
+        const user = new User({
+            name: req.body.name,
+            email: req.body.email,
+            password: req.body.password
+        });
+    
+        await user.save();
+    
+        res.json({
+            success: true,
+            email: req.body.email
+        })
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+app.get('/users', async (req,res) => {
+    const users = await User.find({})
+    res.send(users);
+})

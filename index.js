@@ -174,3 +174,21 @@ app.get('/users', async (req,res) => {
     const users = await User.find({})
     res.send(users);
 })
+
+app.get('/users/email', async (req, res) => {
+    try {
+        const email = req.query.email;
+        if (!email) {
+            return res.status(400).send({ error: 'Email query parameter is required' });
+        }
+
+        const user = await User.findOne({ email: email });
+        if (!user) {
+            return res.status(404).send({ error: 'User not found' });
+        }
+
+        res.send(user);
+    } catch (err) {
+        res.status(500).send({ error: 'Failed to fetch user details' });
+    }
+});

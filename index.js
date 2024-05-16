@@ -157,22 +157,17 @@ const User = mongoose.model('User', {
 })
 
 app.post('/register', async (req,res) => {
-    try {
-        const user = new User({
-            name: req.body.name,
-            email: req.body.email,
-            password: req.body.password
-        });
-    
-        await user.save();
-        res.send('User POST Method')
-        res.json({
-            success: true,
-            email: req.body.email
-        })
-    } catch (error) {
-        console.log(error);
-    }
+    const user = new User({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password
+    });
+
+    await user.save();
+    res.json({
+        success: true,
+        email: req.body.email
+    })
 })
 
 app.get('/users', async (req,res) => {

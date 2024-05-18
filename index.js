@@ -141,6 +141,16 @@ app.get('/allproducts', async (req,res) => {
     res.send(products);
 });
 
+app.get('/allproducts/:id', async (req,res) => {
+    try {
+        const data = await Product.findOne({id:req.params.id});
+        res.send(data)
+    }
+    catch (err) {
+        console.log(err);
+    }
+});
+
 const User = mongoose.model('User', {
     name: {
         type: String,

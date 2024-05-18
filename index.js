@@ -151,6 +151,17 @@ app.get('/allproducts/:id', async (req,res) => {
     }
 });
 
+app.get('/allproducts/:id/similar', async (req,res) => {
+    try {
+        const data = await Product.findOne({id:req.params.id});
+        const similar = await Product.find({category: data.category});
+        res.send(similar)
+    }
+    catch(err) {
+        console.log(err);
+    }
+})
+
 const User = mongoose.model('User', {
     name: {
         type: String,

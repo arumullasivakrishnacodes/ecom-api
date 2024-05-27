@@ -1,7 +1,6 @@
 const port = process.env.PORT || 4000;
 
 const express = require('express');
-const serverless = require('serverless-http');
 const app = express();
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
@@ -205,6 +204,3 @@ app.get('/users/:email', async (req, res) => {
         res.status(500).send({ error: 'Failed to fetch user details' });
     }
 });
-
-
-module.exports.handler = serverless(app);
